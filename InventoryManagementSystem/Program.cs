@@ -5,16 +5,20 @@ public class Program
 {
     private static void Main(string[] args)
     {
-        IItem item = new Item("Lenovo",1000,2);
-        IItem item2 = new Item("Samsung 24 Ultra",2200,3);
+        Product product = new Product("Samsung S24 Ultra", 2000, 2, true, "2024-12-12");
+        product.SetCategory("Smartphones");
 
-        Console.WriteLine(item.GetItemDetails());
-        item.ItemDescription();
-        Console.WriteLine(($"Total: {item.CalculateValue()}"));
+        Console.WriteLine(product.GetItemDetails());
+        product.ItemDescription();
 
+        Console.WriteLine($"Category Name: {product.GetCategory()}");
+        Console.WriteLine($"Total: {product.CalculateValue()}");
+        if (product.IsPerishable())
+        {
+            product.HandleExpiration();
+        }
 
-        Console.WriteLine(item2.GetItemDetails());
-        item2.ItemDescription();
-        Console.WriteLine($"Total: {item2.CalculateValue()}");
+        product.SetPrice(2400);
+        Console.WriteLine($"New Price: {product.GetPrice()}");
     }
 }
