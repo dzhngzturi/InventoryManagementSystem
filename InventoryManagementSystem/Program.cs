@@ -5,7 +5,7 @@ public class Program
 {
     private static void Main(string[] args)
     {
-        Product product = new Product("Samsung S24 Ultra", 2000, 2, true, "2024-12-12");
+        Product product = new Product("Samsung S24 Ultra", 2000, 2, "Smartphones",DateTime.Now.AddMonths(1));
         product.SetCategory("Smartphones");
 
         Console.WriteLine(product.GetItemDetails());

@@ -7,81 +7,68 @@ using System.Threading.Tasks;
 
 namespace InventoryManagementSystem.Data
 {
-    public class Product : IItem, ICategorizable, IBreakable, IPerishable, ISellable
+    public class Product : AbstractItem
     {
-        private string name;
-        private string category;
-        private double price;
-        private int quantity;
-        private bool isBreakable;
-        private bool isPerishable;
-        private string expirationDate;
-
-        public Product(string name, double price, int quantity, bool isBreakable, string expirationDate)
+        public Product(string name, double price, int quantity, string category, DateTime expirationDate) :
+            base(name, price, quantity, category, expirationDate)
         {
-            this.name = name;
-            this.price = price;
-            this.quantity = quantity;
-            this.isBreakable = isBreakable;
-            this.expirationDate = expirationDate;
+
         }
 
 
         public string GetItemDetails()
         {
-            return ($"Product Name: {name}, Price: {price}");
+            return ($"Product Name: {Name}, Price: {Price}");
         }
 
         public double CalculateValue()
         {
-            return price * quantity;
+            return Price * Quantity;
         }
 
         public void ItemDescription()
         {
-            Console.WriteLine($"Product description: {name}, Lorem Ipsum is simply dummy text of the printing and typesetting industry. ");
+            Console.WriteLine($"Product description: {Name}, Lorem Ipsum is simply dummy text of the printing and typesetting industry. ");
         }
         public string GetCategory()
         {
-            return category;
+            return Category;
         }
 
         public void SetCategory(string categoryName)
         {
-            this.category = categoryName;
+            this.Category = categoryName;
         }
 
         public bool IsBreakable()
         {
-            return isBreakable;
+            return true;
         }
 
         public void HandleBreakage()
         {
-            if (isBreakable)
-            {
-                Console.WriteLine($"{name} has been broken and can't be sold");
-            }
+
+            Console.WriteLine($"{Name} has been broken and can't be sold");
         }
 
         public bool IsPerishable()
         {
-            return !string.IsNullOrEmpty(expirationDate);
+            return !string.IsNullOrEmpty(ExpirationDate.ToShortDateString());
         }
 
         public void HandleExpiration()
         {
-            Console.WriteLine($"{name} has expired and can't be sold");
+            Console.WriteLine($"{Name} has expired and can't be sold");
         }
 
         public double GetPrice()
         {
-            return price;
+            return Price;
         }
 
         public void SetPrice(double price)
         {
-            this.price = price;
+            this.Price = price;
         }
     }
 }
