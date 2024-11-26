@@ -9,8 +9,8 @@ namespace InventoryManagementSystem.Data
 {
     public class Product : AbstractItem
     {
-        public Product(string name, double price, int quantity, string category, DateTime expirationDate) :
-            base(name, price, quantity, category, expirationDate)
+        public Product(string name, double price, string category, DateTime expirationDate) :
+            base(name, price, category, expirationDate)
         {
 
         }
@@ -23,7 +23,7 @@ namespace InventoryManagementSystem.Data
 
         public double CalculateValue()
         {
-            return Price * Quantity;
+            return Price;
         }
 
         public void ItemDescription()

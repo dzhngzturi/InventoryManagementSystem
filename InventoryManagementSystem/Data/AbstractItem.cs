@@ -11,47 +11,45 @@ namespace InventoryManagementSystem.Data
     {
         public string Name {  get; set; }
         public double Price { get; set; }
-        public int Quantity { get; set; }
         public string Category { get; set; }
         public DateTime ExpirationDate { get; set; }
-        public AbstractItem(string name, double price, int quantity, string category, DateTime dateTime)
+        public AbstractItem(string name, double price, string category, DateTime dateTime)
         {
             this.Name = name;
             this.Price = price;
-            this.Quantity = quantity;
             this.Category = category;
             this.ExpirationDate = dateTime;
         }
 
-        public double CalculateValue()
+        public virtual double CalculateValue()
         {
-            return Quantity * Price;
+            return Price;
         }
 
-        public string GetItemDetails()
+        public virtual string GetItemDetails()
         {
-            return $"Name: {Name}, Price: {Price}, Quantity: {Quantity}, Expiration Date: {ExpirationDate.ToShortDateString()}";
+            return $"Name: {Name}, Price: {Price}, Expiration Date: {ExpirationDate.ToShortDateString()}";
         }
 
-        public void ItemDescription()
+        public virtual void ItemDescription()
         {
             Console.WriteLine($"Description: {Name}, Lorem Ipsum is simply dummy text of the printing and typesetting industry.");
         }
-        public string GetCategory()
+        public virtual string GetCategory()
         {
             return Category;
         }
-        public void SetCategory(string categoryName)
+        public virtual void SetCategory(string categoryName)
         {
             this.Category = categoryName;
         }
 
-        public bool IsBreakable()
+        public virtual bool IsBreakable()
         {
             return false;
         }
 
-        public void HandleBreakage()
+        public virtual void HandleBreakage()
         {
             if (IsBreakable())
             {
@@ -63,12 +61,12 @@ namespace InventoryManagementSystem.Data
             }
         }
 
-        public bool IsPerishable()
+        public virtual bool IsPerishable()
         {
             return ExpirationDate < DateTime.Now;
         }
 
-        public void HandleExpiration()
+        public virtual void HandleExpiration()
         {
             if (!IsPerishable())
             {
@@ -80,12 +78,12 @@ namespace InventoryManagementSystem.Data
             }
         }
 
-        public double GetPrice()
+        public virtual double GetPrice()
         {
             return Price;
         }
 
-        public void SetPrice(double price)
+        public virtual void SetPrice(double price)
         {
            Price = price;   
         }
