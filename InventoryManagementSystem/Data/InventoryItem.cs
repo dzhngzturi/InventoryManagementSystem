@@ -9,6 +9,10 @@ namespace InventoryManagementSystem.Data
     public class InventoryItem : AbstractItem
     {
         public int ItemID { get; set; }
+        public string Name { get; set; }
+        public double Price { get; set; }
+        public string Category { get; set; }
+        public DateTime ExpirationDate { get; set; }    
         public int Quantity { get; set; }
 
 
@@ -16,6 +20,10 @@ namespace InventoryManagementSystem.Data
             : base(name, price, category, expirationDate)
         {
             ItemID = itemId;
+            Name = name;
+            Price = price;
+            Category = category;
+            ExpirationDate = expirationDate;
             Quantity = quantity;
         }
 
