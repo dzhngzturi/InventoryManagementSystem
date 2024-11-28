@@ -9,14 +9,18 @@ public class Program
 
         bool exit = false;
 
+        manager.Inventory.Add(new InventoryItem(01, "Iphone 14 Pro Max", 2000, "Electronics", DateTime.Now.AddYears(1), 12));
+        manager.Inventory.Add(new InventoryItem(02, "Milk", 3, "Grocery", DateTime.Now.AddDays(6), 10));
+
+
         while (!exit)
         {
             Console.WriteLine("Inventory Management System");
             Console.WriteLine("1. Add item");
             Console.WriteLine("2. Remove item by ID");
             Console.WriteLine("3. Display items");
-            Console.WriteLine("4. Categorize item");
-            Console.WriteLine("5. Create Order");
+            Console.WriteLine("4. Create Order");
+            Console.WriteLine("5. Process Payment");
             Console.WriteLine("6. Exit");
             Console.WriteLine("Enter your choice (1-6): ");
 
@@ -34,10 +38,23 @@ public class Program
                     manager.DisplayItems();
                     break;
                 case "4":
-                    manager.CategorizeItem();
+                    Order order = manager.CreateOrder();
+                    // Console.WriteLine($"Order created with with Order ID is: {order.OrderID} and total is: {order.TotalAmount:C}");
+                    order.DisplayOrderDetails();
                     break;
                 case "5":
-                    manager.CreateOrder();
+                    Console.WriteLine("Enter the Order ID to proccess for payment");
+                    int orderId = int.Parse(Console.ReadLine()); 
+
+                    Order orderToProcess = manager.Orders.Find(o => o.OrderID == orderId);
+                    if (orderToProcess != null)
+                    {
+                        manager.ProcessOrderPayment(orderToProcess);
+                    }
+                    else
+                    {
+                        Console.WriteLine("Order not found");
+                    }
                     break;
                 case "6":
                     exit = true;

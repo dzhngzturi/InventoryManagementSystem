@@ -9,11 +9,12 @@ namespace InventoryManagementSystem.Data
     public class InventoryManager
     {
         public List<InventoryItem> Inventory { get; set; }
-
+        public List<Order> Orders { get; set; }
 
         public InventoryManager()
         {
             Inventory = new List<InventoryItem>();
+            Orders = new List<Order>();
         }
 
         public void SaveInventoryToFile(string fileName)
@@ -142,29 +143,53 @@ namespace InventoryManagementSystem.Data
             else { Console.WriteLine("Item not found"); }
         }
 
-        public void CreateOrder()
+        public Order CreateOrder()
         {
-            Console.WriteLine("Enter Item ID to order:");
-            int id = int.Parse(Console.ReadLine());
+            Order order = new Order();
+            Console.WriteLine("Enter the number of items in the order");
+            int numberOfItems = int.Parse(Console.ReadLine());
 
-            var itemToOrder = Inventory.Find(item => item.ItemID == id);    
-            if (itemToOrder != null)
+            for (int i = 0; i < numberOfItems; i++)
             {
-                Console.WriteLine("Enter your quantity to order");
+                Console.WriteLine($"Enter the item ID for item {i + 1}: ");
+                int itemId = int.Parse(Console.ReadLine());
+                var item = Inventory.Find(x => x.ItemID == itemId);
+                if (item == null) {
+                    Console.WriteLine("item not found");
+                    continue;
+                }
+                Console.WriteLine($"Enter quantity for: {item.Name}");
                 int quantity = int.Parse(Console.ReadLine());
-                if (quantity <= itemToOrder.Quantity)
+
+                if (quantity > item.Quantity)
                 {
-                    itemToOrder.Quantity = quantity;
-                    Console.WriteLine($"Order created successfully for {quantity} {itemToOrder.Name}(s)");
+                    Console.WriteLine("Not enough stock available");
+                    continue;
                 }
-                else
-                {
-                    Console.WriteLine("Not enough available");
-                }
+
+                order.AddItem(new OrderItem(item, quantity));
+            }
+
+            return order;
+        }
+
+        public void ProcessOrderPayment(Order order)
+        {
+            Console.WriteLine($"The total amount for the order is: {order.TotalAmount:C}");
+            Console.WriteLine("Enter payment amount");
+            double paymentAmount = double.Parse(Console.ReadLine());
+
+            Payment payment = new Payment(paymentAmount);
+
+            if (payment.ProcessPayment(order.TotalAmount))
+            {
+                Console.WriteLine("Payment successfull");
+                order.UpdateInventory();
+                Orders.Add(order);
             }
             else
             {
-                Console.WriteLine("Item not found");
+                Console.WriteLine("Payment failed. Please try again!");
             }
         }
 
