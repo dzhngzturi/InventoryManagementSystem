@@ -63,5 +63,10 @@ namespace InventoryManagementSystem.Data
             double baseValue = base.GetPrice();
             return baseValue * Quantity;
         }
+
+        public double GetPrice()
+        {
+            return Price;
+        }
     }
 }

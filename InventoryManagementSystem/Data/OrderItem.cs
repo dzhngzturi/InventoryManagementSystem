@@ -8,14 +8,15 @@ namespace InventoryManagementSystem.Data
 {
     public class OrderItem
     {
-        public InventoryItem Item { get; set; }
+        public InventoryItem InventoryItem { get; set; }
         public int Quantity { get; set; }
-        public double ItemTotal => Item.Price * Quantity;
 
-        public OrderItem(InventoryItem item, int quantity)
+        public OrderItem(InventoryItem inventoryItem, int quantity)
         {
-            Item = item;
+            InventoryItem = inventoryItem;
             Quantity = quantity;
         }
+
+
     }
 }

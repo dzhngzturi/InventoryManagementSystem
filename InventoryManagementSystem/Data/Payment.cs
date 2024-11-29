@@ -1,4 +1,5 @@
-﻿using System;
+﻿using InventoryManagementSystem.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,25 +10,23 @@ namespace InventoryManagementSystem.Data
     public class Payment
     {
         public double Amount { get; set; }
-        public bool IsPaid { get; set; }
         public Payment(double amount)
         {
             Amount = amount;
-            IsPaid = false;
         }
 
-        public bool ProcessPayment(double total)
+        public bool ProcessPayment(IPaymentMethod paymentMethod, double orderTotal)
         {
-            if (Amount >= total)
+            if (paymentMethod.Validate())
             {
-                IsPaid = true;
-                return true;
+
+                return paymentMethod.AuthorizePayment(orderTotal);
             }
-            else
-            {
-                Console.WriteLine($"Payment cancelled order total is: {total:C} your card amount is: {Amount:C}");
-                return false;
-            }
+            return false;
+
         }
+
+
+
     }
 }
